@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import sys
 
 
 def env_var_loader(file_name, file_path=None):
@@ -21,3 +22,5 @@ def env_var_loader(file_name, file_path=None):
 
 
 env_var_loader("tests/.env")
+
+sys.path.append(os.path.join(os.getcwd(), 'cloud_function'))

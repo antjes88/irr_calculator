@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from google.cloud import bigquery
-from cloud_function import model
+import model
 
 
 class AbstractRepository(ABC):

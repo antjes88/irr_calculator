@@ -1,4 +1,5 @@
-from cloud_function import repository, services
+import repository
+import services
 
 
 def func_entry_point(event, context):

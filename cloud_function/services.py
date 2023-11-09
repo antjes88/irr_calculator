@@ -1,5 +1,5 @@
-from cloud_function.repository import AbstractRepository
-from cloud_function import model
+from repository import AbstractRepository
+import model
 
 
 def irr_pipeline(repository: AbstractRepository):
