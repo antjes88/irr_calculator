@@ -39,7 +39,8 @@ def repository_with_cashflows(bq_repository):
         write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
         source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
     )
-    bq_repository.client.create_dataset(os.environ["DATASET"], exists_ok=True)
+    if os.environ.get('SA_JSON'):
+        bq_repository.client.create_dataset(os.environ["DATASET"], exists_ok=True)
     bq_repository.load_table_from_json(
         CASHFLOWS, os.environ["DATASET"] + "." + os.environ["SOURCE_TABLE"], job_config
     )
