@@ -29,6 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           python -m pip install pytest==7.4.3
+          python -m pip install python-dotenv==0.14.0
       - name: Test with pytest
         run: |
           python -m pytest -vv
