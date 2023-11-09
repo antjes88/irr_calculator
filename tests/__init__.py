@@ -28,7 +28,7 @@ sys.path.append(os.path.join(os.getcwd(), 'cloud_function'))
 
 # load sa if applicable
 if os.environ.get('SA_JSON'):
-    file_name = 'sa.json'
+    file_name = 'temp/sa.json'
     with open(file_name, 'r') as f:
         f.write(os.environ['SA_JSON'])
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = file_name
