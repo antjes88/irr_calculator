@@ -20,7 +20,15 @@ def env_var_loader(file_name, file_path=None):
     if os.path.isfile(env_path):
         load_dotenv(dotenv_path=env_path)
 
-
+# load env vars
 env_var_loader("tests/.env")
 
+# load path to get python files
 sys.path.append(os.path.join(os.getcwd(), 'cloud_function'))
+
+# load sa if applicable
+if os.environ.get('SA_JSON'):
+    file_name = 'sa.json'
+    with open(file_name, 'r') as f:
+        f.write(os.environ['SA_JSON'])
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = file_name
