@@ -3,11 +3,13 @@ from dotenv import load_dotenv
 
 
 def env_var_loader(file_name, file_path=None):
-    """ Method that allows to load env variables in local from a file.
+    """
+    Load environment variables from a specified file using python-dotenv.
+
     Args:
-        file_name: path to file with environment variables
-        file_path: path to the file, if it is not provided it is assumed that the file is in the root of the project
-        """
+        file_name (str): The name of the environment file.
+        file_path (str, optional): The path to the directory containing the environment file.
+    """
     if file_path:
         env_path = os.path.join(file_path, file_name)
     else:
@@ -18,4 +20,4 @@ def env_var_loader(file_name, file_path=None):
         load_dotenv(dotenv_path=env_path)
 
 
-env_var_loader('tests/.env')
+env_var_loader("tests/.env")

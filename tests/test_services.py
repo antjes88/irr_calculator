@@ -16,16 +16,26 @@ def test_irr_pipeline(repository_with_cashflows):
         f"SELECT * FROM {os.environ['DATASET']}.{os.environ['DESTINATION_TABLE']} ORDER BY entity_name, date"
     )
     expected_results = [
-        Row(('Test Account 1', 0.1, 2.1384, dt.date(2022, 2, 1)),
-            {'entity_name': 0, 'irr_monthly': 1, 'irr_annual': 2, 'date': 3}),
-        Row(('Test Account 1', 0.1, 2.1384, dt.date(2022, 3, 1)),
-            {'entity_name': 0, 'irr_monthly': 1, 'irr_annual': 2, 'date': 3}),
-        Row(('Test Account 1', 0.1, 2.1384, dt.date(2022, 4, 1)),
-            {'entity_name': 0, 'irr_monthly': 1, 'irr_annual': 2, 'date': 3}),
-        Row(('Test Account 1', 0.1, 2.1384, dt.date(2022, 5, 1)),
-            {'entity_name': 0, 'irr_monthly': 1, 'irr_annual': 2, 'date': 3}),
-        Row(('Test Account 2', 0.1, 2.1384, dt.date(2022, 4, 1)),
-            {'entity_name': 0, 'irr_monthly': 1, 'irr_annual': 2, 'date': 3})
+        Row(
+            ("Test Account 1", 0.1, 2.1384, dt.date(2022, 2, 1)),
+            {"entity_name": 0, "irr_monthly": 1, "irr_annual": 2, "date": 3},
+        ),
+        Row(
+            ("Test Account 1", 0.1, 2.1384, dt.date(2022, 3, 1)),
+            {"entity_name": 0, "irr_monthly": 1, "irr_annual": 2, "date": 3},
+        ),
+        Row(
+            ("Test Account 1", 0.1, 2.1384, dt.date(2022, 4, 1)),
+            {"entity_name": 0, "irr_monthly": 1, "irr_annual": 2, "date": 3},
+        ),
+        Row(
+            ("Test Account 1", 0.1, 2.1384, dt.date(2022, 5, 1)),
+            {"entity_name": 0, "irr_monthly": 1, "irr_annual": 2, "date": 3},
+        ),
+        Row(
+            ("Test Account 2", 0.1, 2.1384, dt.date(2022, 4, 1)),
+            {"entity_name": 0, "irr_monthly": 1, "irr_annual": 2, "date": 3},
+        ),
     ]
 
     for result, expected_result in zip(results, expected_results):

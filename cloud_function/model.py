@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import datetime as dt
 import numpy_financial as npf
 
+
 @dataclass(frozen=True)
 class Cashflow:
     """
@@ -15,6 +16,7 @@ class Cashflow:
         value (float): The net value.
         entity_name (str): The name of the associated entity.
     """
+
     date: dt.datetime
     inflow: float
     outflow: float
@@ -46,6 +48,7 @@ class Irr:
     Methods:
         to_dict(): Convert the IRR data to a dictionary for serialization.
     """
+
     date: dt.datetime
     value: float
     entity_name: str
@@ -68,10 +71,10 @@ class Irr:
             dict: A dictionary representation of the IRR data.
         """
         return {
-            'date': self.date.strftime('%Y-%m-%d'),
-            'irr_monthly': self.value,
-            'irr_annual': self.value_annual,
-            'entity_name': self.entity_name
+            "date": self.date.strftime("%Y-%m-%d"),
+            "irr_monthly": self.value,
+            "irr_annual": self.value_annual,
+            "entity_name": self.entity_name,
         }
 
 
@@ -89,6 +92,7 @@ class Entity:
         add_cashflow(cashflow: Cashflow): Add a Cashflow to the entity's list of cashflows.
         calculate_irr(): Calculate IRR data based on the entity's cashflows.
     """
+
     def __init__(self, entity_name: str):
         self.entity_name: str = entity_name
         self.sorted_cashflows: list[Cashflow] = []
@@ -117,10 +121,20 @@ class Entity:
             # raise Exception("Not enough values")
             # todo: make this to be logged
         else:
-            periodic_cashflow = [self.sorted_cashflows[0].outflow - self.sorted_cashflows[0].inflow]
+            periodic_cashflow = [
+                self.sorted_cashflows[0].outflow - self.sorted_cashflows[0].inflow
+            ]
             for cashflow in self.sorted_cashflows[1:]:
-                periodic_cashflow.append(cashflow.value + cashflow.outflow - cashflow.inflow)
-                self.irrs.append(Irr(cashflow.date, round(npf.irr(periodic_cashflow), 4), self.entity_name))
+                periodic_cashflow.append(
+                    cashflow.value + cashflow.outflow - cashflow.inflow
+                )
+                self.irrs.append(
+                    Irr(
+                        cashflow.date,
+                        round(npf.irr(periodic_cashflow), 4),
+                        self.entity_name,
+                    )
+                )
                 periodic_cashflow[-1] = cashflow.outflow - cashflow.inflow
 
     def __eq__(self, other):
@@ -132,7 +146,9 @@ class Entity:
         return hash(self.entity_name)
 
 
-def allocate_cashflows_to_entities(cashflows: list[Cashflow], entities: dict[str: Entity]):
+def allocate_cashflows_to_entities(
+    cashflows: list[Cashflow], entities: dict[str:Entity]
+):
     """
     Allocate cashflows to entities based on the entity names.
 
@@ -150,7 +166,7 @@ def allocate_cashflows_to_entities(cashflows: list[Cashflow], entities: dict[str
     return entities
 
 
-def entities_collection_creation(cashflows: list[Cashflow]) -> dict[str: Entity]:
+def entities_collection_creation(cashflows: list[Cashflow]) -> dict[str:Entity]:
     """
     Create a collection of entities based on the provided list of cashflows.
 

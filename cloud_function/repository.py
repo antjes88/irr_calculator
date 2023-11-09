@@ -13,6 +13,7 @@ class AbstractRepository(ABC):
         get_cashflows: Abstract method for retrieving cashflows from the repository.
         load_irrs: Abstract method for loading Internal Rate of Return (IRR) data into the repository.
     """
+
     @abstractmethod
     def get_cashflows(self) -> list[model.Cashflow]:
         """
@@ -27,7 +28,7 @@ class AbstractRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def load_irrs(self, entities: dict[str: model.Entity]):
+    def load_irrs(self, entities: dict[str : model.Entity]):
         """
         Abstract method for loading Internal Rate of Return (IRR) data into the repository.
 
@@ -62,6 +63,7 @@ class BiqQueryRepository(AbstractRepository):
             Load data from a list of dictionaries into a BigQuery table.
         load_irrs(entities: dict[str, model.Entity]): Load IRR data from a dictionary of Entity objects.
     """
+
     def __init__(self, project=None):
         self.client = bigquery.Client(project=project)
         self.cashflow_source = "SELECT * FROM dw_accounting.cashflows"
@@ -91,11 +93,20 @@ class BiqQueryRepository(AbstractRepository):
         """
         cashflows = []
         for row in self.get(self.cashflow_source):
-            cashflows.append(model.Cashflow(row.date, row.inflow, row.outflow, row.value, row.entity_name))
+            cashflows.append(
+                model.Cashflow(
+                    row.date, row.inflow, row.outflow, row.value, row.entity_name
+                )
+            )
 
         return cashflows
 
-    def load_table_from_json(self, data: list[dict], destination: str, job_config: bigquery.job.load.LoadJobConfig):
+    def load_table_from_json(
+        self,
+        data: list[dict],
+        destination: str,
+        job_config: bigquery.job.load.LoadJobConfig,
+    ):
         """
         Load data from a list of dictionaries into a BigQuery table.
 
@@ -104,10 +115,12 @@ class BiqQueryRepository(AbstractRepository):
             destination (str): The destination table in BigQuery.
             job_config (bigquery.job.load.LoadJobConfig): Job configuration for the load operation.
         """
-        load_job = self.client.load_table_from_json(data, destination, job_config=job_config)
+        load_job = self.client.load_table_from_json(
+            data, destination, job_config=job_config
+        )
         load_job.result()
 
-    def load_irrs(self, entities: dict[str: model.Entity]):
+    def load_irrs(self, entities: dict[str : model.Entity]):
         """
         Load IRR data from a dictionary of Entity objects into BigQuery. This method extracts IRR data from Entity
         objects and loads it into the specified BigQuery destination table.
