@@ -10,7 +10,7 @@ value of cash outflows. The primary purpose of IRR is to assess the attractivene
 
 The IRR is calculated using the following formula:
 
-$`NPV = \sum_{t=0}^{T} \frac{CF_t}{(1 + r)^t}`$
+$`NPV = \sum_{t=0}^T \frac{CF_t}{(1 + r)^t}`$
 
 Where:
 - \( NPV \) is the net present value of cash inflows and outflows.
