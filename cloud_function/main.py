@@ -2,7 +2,7 @@ import repository
 import services
 
 
-def func_entry_point(event, context):
+def function_entry_point(event, context):
     """
     Entry point for the application. This function initializes a BigQuery repository connector and invokes the
     IRR pipeline.
