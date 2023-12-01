@@ -66,7 +66,7 @@ class BiqQueryRepository(AbstractRepository):
 
     def __init__(self, project=None):
         self.client = bigquery.Client(project=project)
-        self.cashflow_source = "SELECT * FROM dw_accounting.cashflows"
+        self.cashflow_source = "SELECT * FROM dm_accounting.cashflows"
         self.irr_destination = "publishing.entity_irrs"
 
     def get(self, query: str) -> bigquery.table.RowIterator:
